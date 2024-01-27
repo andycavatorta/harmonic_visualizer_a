@@ -174,7 +174,19 @@ class AMT203():
 
 #def init():
 
+def receptor(message):
+    print(message)
 
+def test():
+    encoders = AMT203s(
+        receptor,
+        {
+            "a":3,
+            "b":5,
+            "c":7,
+            "d":11,
+        }
+    )
 
 
 
