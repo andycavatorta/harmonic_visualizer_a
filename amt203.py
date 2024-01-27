@@ -119,15 +119,15 @@ class AMT203():
 
         
     def get_position_and_difference(self):
-        request = self._write_read_([self.READ_POS])
+        request = self._write_read_([READ_POS])
         counter = 0
         while request[0] != self.READ_POS:
-          request = self._write_read_([self.NO_OP])
+          request = self._write_read_([NO_OP])
           counter += 1
           if counter == 100:
               return -1
-        position_bytes = self._write_read_([self.NO_OP])
-        position_bytes += self._write_read_([self.NO_OP])
+        position_bytes = self._write_read_([NO_OP])
+        position_bytes += self._write_read_([NO_OP])
         return self.from_bytes(position_bytes)
         
     def _write_read_(self, output_bytes) -> bytes:
