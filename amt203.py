@@ -61,6 +61,7 @@ class AMT203s(threading.Thread):
                 speed_hz,
                 self.delay_sec
             )
+        self.start()
 
     def reopen(self):
         pass
