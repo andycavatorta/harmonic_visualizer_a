@@ -54,7 +54,7 @@ class AMT203s(threading.Thread):
         self.open()
 
         for name,pin in encoder_names_and_chip_select_gpio.items():
-            self.encoders[name] = self.AMT203(
+            self.encoders[name] = AMT203(
                 bus_number,
                 device_number,
                 pin,
