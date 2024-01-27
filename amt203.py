@@ -55,10 +55,8 @@ class AMT203s(threading.Thread):
 
         for name,pin in encoder_names_and_chip_select_gpio.items():
             self.encoders[name] = AMT203(
-                bus_number,
-                device_number,
+                self.spi,
                 pin,
-                speed_hz,
                 self.delay_sec
             )
         self.start()
@@ -83,13 +81,11 @@ class AMT203s(threading.Thread):
 class AMT203():
     def __init__(
         self,
-        bus_number, 
-        device_number, 
+        spi,
         gpio_for_chip_select,
-        speed_hz,
         delay):
+        self.spi = spi
         self.gpio_for_chip_select = gpio_for_chip_select
-        self.speed_hz = speed_hz
         self.delay = delay
         GPIO.setup(gpio_for_chip_select, GPIO.OUT)
         GPIO.output(gpio_for_chip_select, GPIO.HIGH)
@@ -156,7 +152,7 @@ class AMT203():
         try:
             GPIO.output(self.gpio_for_chip_select, GPIO.LOW)
             time.sleep(.05)
-            msg_in = spi.xfer(msg_out, self.speed, self.delay)
+            msg_in = self.spi.xfer(msg_out, self.speed, self.delay)
             GPIO.output(self.gpio_for_chip_select, GPIO.HIGH)
             status = True
         except Exception as e: # todo: add specific exceptions?
