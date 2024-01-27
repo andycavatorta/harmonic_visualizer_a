@@ -13,6 +13,7 @@ encoders = AMT203s(
         "d":11,
     }
 )
+
 """
 import spidev
 import RPi.GPIO as GPIO
@@ -152,6 +153,7 @@ class AMT203():
 
         
     def _write_read_(self, msg_out):
+        """
         try:
             GPIO.output(self.gpio_for_chip_select, GPIO.LOW)
             time.sleep(.05)
@@ -163,6 +165,12 @@ class AMT203():
             msg_in = ""
         finally:
             GPIO.output(self.gpio_for_chip_select, GPIO.HIGH)
+        """
+        GPIO.output(self.gpio_for_chip_select, GPIO.LOW)
+        time.sleep(.05)
+        msg_in = self.spi.xfer(msg_out, self.speed, self.delay)
+        GPIO.output(self.gpio_for_chip_select, GPIO.HIGH)
+        status = True
         print(msg_in, status)
         return (msg_in, status)
         
