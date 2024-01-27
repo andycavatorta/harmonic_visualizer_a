@@ -181,7 +181,7 @@ class AMT203():
         return (device_ref, status)
 
 
-def init():
+#def init():
 
 
 
