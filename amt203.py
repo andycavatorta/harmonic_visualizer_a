@@ -53,7 +53,7 @@ class AMT203s(threading.Thread):
         GPIO.setmode(GPIO.BCM)
         self.open()
 
-        for name,pin in encoder_names_and_chip_select_gpio:
+        for name,pin in encoder_names_and_chip_select_gpio.items():
             self.encoders[name] = self.AMT203(
                 bus_number,
                 device_number,
