@@ -121,7 +121,7 @@ class AMT203():
     def get_position_and_difference(self):
         request = self._write_read_([READ_POS])
         counter = 0
-        while request[0] != self.READ_POS:
+        while request[0] != READ_POS:
           request = self._write_read_([NO_OP])
           counter += 1
           if counter == 100:
