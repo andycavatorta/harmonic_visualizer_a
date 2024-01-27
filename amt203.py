@@ -91,7 +91,7 @@ class AMT203():
     return presences
 
 amt203 = AMT203(
-    gpios_for_chip_select=[3,5,7,17]
+    gpios_for_chip_select=[2,3,4,17]
 )
 amt203.get_presences()
 amt203.get_positions()
