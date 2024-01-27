@@ -129,17 +129,14 @@ class AMT203():
               return -1
         position_bytes = self._write_read_([NO_OP])
         position_bytes += self._write_read_([NO_OP])
-        return self.from_bytes(position_bytes)
+        print("position_bytes=",position_bytes)
+        #return self.from_bytes(position_bytes)
         
     def _write_read_(self, output_bytes) -> bytes:
         try:
             GPIO.output(self.gpio_for_chip_select, GPIO.LOW)
-            time.sleep(.05)
-
             time.sleep(self.delay_sec)
             received_bytes = self.spi.xfer(output_bytes, self.speed_hz, self.delay)
-
-            GPIO.output(self.gpio_for_chip_select, GPIO.HIGH)
             status = True
         except Exception as e: # todo: add specific exceptions?
             status = e
