@@ -43,7 +43,7 @@ class AMT203s(threading.Thread):
         threading.Thread.__init__(self)
         # locals
         self.data_receiver = data_receiver
-        self.delay_sec = delay / 1E3
+        self.delay_sec = delay #/ 1E3
         self.encoders = {}
         self.bus_number = bus_number
         self.device_number = device_number
