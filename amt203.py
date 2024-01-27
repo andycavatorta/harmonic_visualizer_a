@@ -68,7 +68,7 @@ class AMT203s(threading.Thread):
     def open(self):
         self.spi = spidev.SpiDev()
         self.spi.open(self.bus_number, self.device_number)
-        self.spi_speed = speed_hz
+        self.spi_speed = self.speed_hz
         self.spi.mode = 0b00
         self.spi.no_cs = True 
 
