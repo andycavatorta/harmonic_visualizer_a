@@ -141,7 +141,6 @@ class AMT203():
             status = e
             received_bytes = ""
         finally:
-            print("asdf")
             GPIO.output(self.gpio_for_chip_select, GPIO.HIGH)
         #print(received_bytes, status)
         return (received_bytes, status)
