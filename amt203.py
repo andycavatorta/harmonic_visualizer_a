@@ -119,61 +119,36 @@ class AMT203():
 
         
     def get_position_and_difference(self):
-        attempts = 0
-        first_result = self._write_read_([0x10])   
-
-        while True:
-          first_result = self._write_read_([0x00]) 
-          attempts = attempts + 1
-          if attempts > 100: 
-            print(" yuk")
-          
-          if first_result[ 0 ] != 0x10:
-            break;
-
-        attempts = 0
-        while True:
-          tmp = self._write_read_( [0x00])
-          if tmp[ 0 ] == 0x10:
-            msb_result = self._write_read_( [0x00])
-            break;
-          attempts = attempts + 1
-          if attempts > 100: 
-            print(" yuk2 ")
-            continue
-
-        lsb_result = self._write_read_([0x00]) 
-        final_result = (msb_result[0]<<8 | lsb_result[0])
-        while True:
-            first_result = self._write_read_([0x00]) 
-            if first_result[ 0 ] == 165:
-                break;
-
-        print("final_result",final_result)
-
+        request = self._write_read_([self.READ_POS])
+        counter = 0
+        while request[0] != self.READ_POS:
+          request = self._write_read_([self.NO_OP])
+          counter += 1
+          if counter == 100:
+              return -1
+        position_bytes = self._write_read_([self.NO_OP])
+        position_bytes += self._write_read_([self.NO_OP])
+        return self.from_bytes(position_bytes)
         
-    def _write_read_(self, msg_out):
-        """
+    def _write_read_(self, output_bytes) -> bytes:
         try:
             GPIO.output(self.gpio_for_chip_select, GPIO.LOW)
             time.sleep(.05)
-            msg_in = self.spi.xfer(msg_out, self.speed, self.delay)
+
+            time.sleep(self.delay_sec)
+            received_bytes = self.spi.xfer(output_bytes, self.speed_hz, self.delay_usec)
+            GPIO.output(chip_select_pin, GPIO.HIGH)
+    
+
             GPIO.output(self.gpio_for_chip_select, GPIO.HIGH)
             status = True
         except Exception as e: # todo: add specific exceptions?
             status = e
-            msg_in = ""
+            received_bytes = ""
         finally:
             GPIO.output(self.gpio_for_chip_select, GPIO.HIGH)
-        """
-        GPIO.output(self.gpio_for_chip_select, GPIO.LOW)
-        time.sleep(.05)
-        print("> ",msg_out, self.speed, self.delay)
-        msg_in = self.spi.xfer(msg_out)#, self.speed, self.delay)
-        GPIO.output(self.gpio_for_chip_select, GPIO.HIGH)
-        status = True
-        print(msg_in, status)
-        return (msg_in, status)
+        print(received_bytes, status)
+        return (received_bytes, status)
         
     def set_zero(self):
         try:
