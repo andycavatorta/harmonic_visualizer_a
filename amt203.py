@@ -77,6 +77,7 @@ class AMT203s(threading.Thread):
         while True:
             for encoder_name in self.encoders:
                 print(encoder_name)
+                self.encoders[encoder_name].get_position_and_difference()
                 time.sleep(1)
 
 class AMT203():
