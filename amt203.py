@@ -138,8 +138,6 @@ class AMT203():
 
             time.sleep(self.delay_sec)
             received_bytes = self.spi.xfer(output_bytes, self.speed_hz, self.delay)
-            GPIO.output(chip_select_pin, GPIO.HIGH)
-    
 
             GPIO.output(self.gpio_for_chip_select, GPIO.HIGH)
             status = True
