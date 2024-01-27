@@ -139,7 +139,7 @@ class AMT203():
             break;
           attempts = attempts + 1
           if attempts > 100: 
-            print(" yuk2 ", pin)
+            print(" yuk2 ")
             continue
 
         lsb_result = self._write_read_([0x00]) 
@@ -164,6 +164,7 @@ class AMT203():
             msg_in = ""
         finally:
             GPIO.output(self.gpio_for_chip_select, GPIO.HIGH)
+        print(msg_in, status)
         return (msg_in, status)
         
     def set_zero(self):
