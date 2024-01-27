@@ -44,6 +44,11 @@ class AMT203s(threading.Thread):
         self.data_receiver = data_receiver
         self.delay_sec = delay / 1E3
         self.encoders = {}
+        self.bus_number = bus_number
+        self.device_number = device_number
+        self.speed_hz = speed_hz
+        self.polling_interval = polling_interval
+        self.delay = delay
 
         GPIO.setmode(GPIO.BCM)
         self.open()
@@ -62,7 +67,7 @@ class AMT203s(threading.Thread):
 
     def open(self):
         self.spi = spidev.SpiDev()
-        self.spi.open(bus_number, device_number)
+        self.spi.open(self.bus_number, self.device_number)
         self.spi_speed = speed_hz
         self.spi.mode = 0b00
         self.spi.no_cs = True 
