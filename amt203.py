@@ -89,7 +89,7 @@ class AMT203():
         delay):
         self.spi = spi
         self.gpio_for_chip_select = gpio_for_chip_select
-        self.speed = speed
+        self.speed_hz = speed
         self.delay = delay
         self.delay_sec = delay / 1E3
         GPIO.setup(gpio_for_chip_select, GPIO.OUT)
