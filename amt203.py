@@ -16,6 +16,7 @@ encoders = AMT203(
 """
 import spidev
 import RPi.GPIO as GPIO
+import threading
 import time
 
 # command bytes
