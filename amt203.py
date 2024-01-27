@@ -177,10 +177,10 @@ def test():
     encoders = AMT203s(
         receptor,
         {
-            "a":3,
-            "b":5,
-            "c":7,
-            "d":11,
+            "a":2,
+            "b":3,
+            "c":4,
+            "d":17,
         }
     )
 
