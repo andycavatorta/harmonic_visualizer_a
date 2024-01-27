@@ -57,6 +57,7 @@ class AMT203s(threading.Thread):
             self.encoders[name] = AMT203(
                 self.spi,
                 pin,
+                self.speed_hz,
                 self.delay_sec
             )
         self.start()
@@ -83,9 +84,11 @@ class AMT203():
         self,
         spi,
         gpio_for_chip_select,
+        speed,
         delay):
         self.spi = spi
         self.gpio_for_chip_select = gpio_for_chip_select
+        self.speed = speed
         self.delay = delay
         GPIO.setup(gpio_for_chip_select, GPIO.OUT)
         GPIO.output(gpio_for_chip_select, GPIO.HIGH)
