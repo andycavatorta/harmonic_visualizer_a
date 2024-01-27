@@ -90,10 +90,11 @@ class AMT203():
       presences.append(self.get_presence(gpio_for_chip_select))
     return presences
 
-encoders = AMT203s(
+amt203 = AMT203(
     gpios_for_chip_select=[3,5,7,17]
 )
-
+amt203.get_presences()
+amt203.get_positions()
 
 
 """
