@@ -1,3 +1,19 @@
+"""
+usage:
+
+def receptor(message):
+    print(message)
+
+encoders = AMT203(
+    receptor,
+    {
+        "a":3,
+        "b":5,
+        "c":7,
+        "d":11,
+    }
+)
+"""
 import spidev
 import RPi.GPIO as GPIO
 import time
@@ -10,7 +26,7 @@ SET_ZERO = 0x70
 ACK_ZERO = 0x80
 WAIT = 0xA5
 
-class Main(threading.Thread):
+class AMT203(threading.Thread):
     def __init__(
             self, 
             data_receiver,
@@ -55,7 +71,6 @@ class Main(threading.Thread):
             for encoder_name in self.encoders:
                 print(encoder_name)
                 time.sleep(1)
-
 
 class AMT203():
     def __init__(
