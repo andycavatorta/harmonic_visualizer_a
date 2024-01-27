@@ -4,7 +4,7 @@ usage:
 def receptor(message):
     print(message)
 
-encoders = AMT203(
+encoders = AMT203s(
     receptor,
     {
         "a":3,
@@ -27,7 +27,7 @@ SET_ZERO = 0x70
 ACK_ZERO = 0x80
 WAIT = 0xA5
 
-class AMT203(threading.Thread):
+class AMT203s(threading.Thread):
     def __init__(
             self, 
             data_receiver,
