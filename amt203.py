@@ -169,7 +169,7 @@ class AMT203():
         GPIO.output(self.gpio_for_chip_select, GPIO.LOW)
         time.sleep(.05)
         print("> ",msg_out, self.speed, self.delay)
-        msg_in = self.spi.xfer(msg_out, self.speed, self.delay)
+        msg_in = self.spi.xfer(msg_out)#, self.speed, self.delay)
         GPIO.output(self.gpio_for_chip_select, GPIO.HIGH)
         status = True
         print(msg_in, status)
