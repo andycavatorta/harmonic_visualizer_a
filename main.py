@@ -144,7 +144,7 @@ class Main(threading.Thread):
         threading.Thread.__init__(self)
         self.queue = queue.Queue()
 
-        self.encoders =  = amt203s.AMT203s(
+        self.encoders = amt203s.AMT203s(
                 self.add_to_queue,
                 {
                     "a":2,
