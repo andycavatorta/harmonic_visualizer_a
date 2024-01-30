@@ -190,7 +190,7 @@ class Main(threading.Thread):
             cents = -(local_position_offset/29*50)
             frequency = frequency_range_center*(math.pow(2,(cents/1200)))
             in_center_range = False
-        else if local_position_offset > 39:
+        elif local_position_offset > 39:
             cents = (local_position_offset-39)/29*50
             frequency = frequency_range_center*(math.pow(2,(cents/1200)))
             in_center_range = False
