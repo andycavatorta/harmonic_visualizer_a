@@ -58,7 +58,7 @@ class AMT203s():
         self.last_position = position_int
         return (position_int, change_int)
 
-    def set_zero(self, self.pin) -> bool:
+    def set_zero(self, pin) -> bool:
         """ Must power-cycle to start using new zero point """
         request = self.spi_write_read(self.pin, [self.SET_ZERO])
         counter = 0
