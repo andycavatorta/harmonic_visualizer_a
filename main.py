@@ -173,7 +173,7 @@ class Main(threading.Thread):
 
         self.signals = Signals()
         self.start()
-        self.encoders.send_positions():
+        self.encoders.send_positions()
 
     def set_encoder_to_zero(self, encoder_name):
         """
