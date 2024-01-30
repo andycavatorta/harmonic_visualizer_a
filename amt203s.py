@@ -69,7 +69,7 @@ class AMT203():
         return True
 
 
-class AMT203s(threading.thread):
+class AMT203s(threading.Thread):
     
     def __init__(
             self,
@@ -81,7 +81,7 @@ class AMT203s(threading.thread):
             delay=40,
             polling_period = 0.1
         ):
-        threading.thread.__init__(self)
+        threading.Thread.__init__(self)
         delay_sec = delay / 1E3
         self.polling_period = polling_period
         self.event_receiver = event_receiver
