@@ -93,8 +93,8 @@ class AMT203():
 amt203 = AMT203(
     gpios_for_chip_select=[2,3,4,17]
 )
-amt203.get_presences()
-amt203.get_positions()
+#amt203.get_presences()
+#amt203.get_positions()
 
 
 """
