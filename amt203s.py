@@ -1,4 +1,3 @@
-import AMT203
 import spidev
 import threading
 import time
