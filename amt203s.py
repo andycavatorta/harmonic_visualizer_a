@@ -5,7 +5,7 @@ import time
 import RPi.GPIO as GPIO
 
 
-class AMT203s():
+class AMT203():
     BYTEORDER = "big"
     NO_OP = 0x00
     READ_POS = 0x10
