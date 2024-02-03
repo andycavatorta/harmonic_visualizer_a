@@ -25,6 +25,7 @@ import math
 import queue
 import serial
 import threading
+import RPi.GPIO as GPIO
 
 class Settings():
     class GPIOs:
