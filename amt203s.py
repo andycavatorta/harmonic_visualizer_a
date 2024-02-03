@@ -18,7 +18,8 @@ class AMT203():
             pin, 
             spi,
             delay_usec,
-            delay_sec
+            delay_sec,
+            speed_hz
         ):
 
         self.name = name
@@ -26,6 +27,7 @@ class AMT203():
         self.spi = spi
         self.delay_usec = delay_usec
         self.delay_sec = delay_sec
+        self.speed_hz = speed_hz
 
         GPIO.setup(pin, GPIO.OUT)
         GPIO.output(pin, GPIO.HIGH)
@@ -101,7 +103,8 @@ class AMT203s(threading.Thread):
                 pin, 
                 self.spi,
                 self.delay_usec,
-                self.delay_sec
+                self.delay_sec,
+                self.spi_speed
             )
         self.start()
 
