@@ -81,7 +81,8 @@ class AMT203s(threading.Thread):
             polling_period = 0.1
         ):
         threading.Thread.__init__(self)
-        delay_sec = delay / 1E3
+        self.delay_sec = delay / 1E3
+        self.delay_usec = delay / 1E3
         self.polling_period = polling_period
         self.event_receiver = event_receiver
 
@@ -99,9 +100,9 @@ class AMT203s(threading.Thread):
                 name, 
                 pin, 
                 self.spi,
-                delay_usec,
-                delay_sec,
-                event_receiver
+                self.delay_usec,
+                self.delay_sec,
+                self.event_receiver
             )
         self.start()
 
