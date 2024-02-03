@@ -70,7 +70,6 @@ class AMT203():
 
 
 class AMT203s(threading.Thread):
-    
     def __init__(
             self,
             event_receiver,
@@ -104,7 +103,6 @@ class AMT203s(threading.Thread):
                 delay_sec,
                 event_receiver
             )
-
         self.start()
 
     def close(self):

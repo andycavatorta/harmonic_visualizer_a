@@ -23,7 +23,39 @@ GPIOs
 import amt203s
 import math
 import queue
+import serial
 import threading
+
+class Settings():
+    class GPIOs:
+        A_ENCODER_CHIP_SELECT = 2
+        B_ENCODER_CHIP_SELECT = 3
+        C_ENCODER_CHIP_SELECT = 4
+        D_ENCODER_CHIP_SELECT = 17
+        B_SWITCH = 14
+        C_SWITCH = 15
+        D_SWITCH = 18
+        B_SWITCH_LIGHT = 6
+        C_SWITCH_LIGHT = 13
+        D_SWITCH_LIGHT = 19
+        A_LAMP = 23
+        B_LAMP = 24
+        C_LAMP = 25
+        D_LAMP = 8
+
+    class Timing:
+        pushbutton_polling_interval = 0.2
+        encoder_polling_interval = 0.1
+        #fpga_send_interval = 0.1
+        fpga_clk_hz = 50000000
+
+    class SPI:
+        bus_number = 0
+        device_number = 0 
+        speed_hz = 1953125
+        delay = 40self.settings.Timing.pushbutton_polling_interval
+
+
 
 # signal generation
 
@@ -47,12 +79,118 @@ FPGA solution
     resurrecting old python interface code
 outboard IC on carry board?
 """
+
+
+
 class Signals():
-    def __init__(self):
-        pass
+    """
+    to do: automatic reconnect
+    """
+    names_to_fpga__gpio_numbers = {
+        "b":"00",
+        "c":"01",
+        "d":"02",
+    }
+
+    def __init__(
+            self,
+            serial_device_name_pattern,
+            exception_receiver,
+        ):
+        self.serial_device_name_pattern = serial_device_name_pattern
+        self.exception_receiver = exception_receiver
+        self.serial_port = {
+            "is_open":False
+        }
+
+    def get_connected(self):
+        # wrap in a method because it's impolite to access properties directly 
+        return self.serial_port.is_open
+
+
+    def connect(self):
+        try: 
+            self.serial_port = serial.Serial(
+                    self.serial_device_name_pattern,
+                    baudrate = 115200,
+                    timeout=1,
+                    bytesize = serial.EIGHTBITS,
+                    parity = serial.PARITY_NONE,
+                    stopbits = serial.STOPBITS_ONE
+                )
+            self.connected = True
+        except Exception as e:
+            self.connected = False
+            self.exception_receiver("Signals.connect", e)
+
+    def close(self):
+        self.serial_port.close()
+
+
+    def make_binary_word(self,channel_str, frequency):
+        """
+        000 sssss (stringId)
+        001 sffff (stringId, frequency)
+        010 fffff (frequency)
+        011 fffff (frequency)
+        100 fffff (frequency)
+        101 fffff (frequency)
+        """
+        channel_id_binary_str = self.decimal_to_binary_string(int(channel_str)+1, 6)
+        if frequency == 0:
+            period_binary_str = "000000000000000000000000"
+        else:
+            period_int = int((settings.Timing.fpga_clk_hz)/frequency/2)
+            period_binary_str = self.decimal_to_binary_string(period_int, 24)
+        word_b_str = channel_id_binary_str + period_binary_str
+        return word_b_str
+
+    def decimal_to_binary_string(self, n, fill):
+        binary_str = ''
+        while n > 0:
+            binary_str = str(n % 2) + binary_str
+            n = n >> 1
+        return binary_str.zfill(fill)
+
+    def send_serial_data(self,binary_word_str):
+        if self.serial_port.connected:
+            binary_word_length = len(binary_word_str)
+            if binary_word_length not in [8,14,18,24,25,30,35,40,44,48,52,56,60,64]:
+                self.exception_receiver("Signals.send_serial_data", "Error in makeSerialPackets, invalid length for binary_word_str:{}".format(binary_word_length))
+                return
+            if binary_word_length == 8:
+                byte_stuffing_length = 0
+            elif binary_word_length <= 14:
+                byte_stuffing_length = 1
+            elif binary_word_length <= 24:
+                byte_stuffing_length = 2
+            elif binary_word_length <= 40:
+                byte_stuffing_length = 3
+            else:
+                byte_stuffing_length = 4
+            payload_length = 8 - byte_stuffing_length
+            packets_l = []
+            packet_number = 0
+            while len(binary_word_str) > 0:
+                byte_stuffing_str = self.decimal_to_binary_string(packet_number, byte_stuffing_length) # packet ordinal
+                payload_str = binary_word_str[0:payload_length] # segment of binary word
+                binary_word_str = binary_word_str[payload_length:] # truncate binary word
+                packet_number += 1 # increment packet ordinal    
+                packet_int = int(byte_stuffing_str + payload_str, 2) # combine binary strings and convert into base-10 value
+                packet_chr = chr(packet_int)
+                self.serial_port.send(packet_chr)
+                time.sleep(0.005)
+        else:
+            self.exception_receiver("Signals.send_serial_data", "serial port not connected")
+
 
     def set_frequency(self,name,value):
-        print(name,value)
+        binary_word_str = self.make_binary_word(
+            self.names_to_fpga__gpio_numbers[name],
+            value
+        )
+        self.send_serial_data(binary_word_str)
+        print(name,value,binary_word_str)
 
 class Lamp():
     def __init__(
@@ -97,10 +235,12 @@ class Pushbuttons(threading.Thread):
     def __init__(
             self,
             event_receiver,
-            GPIOs
+            GPIOs,
+            polling_period = self.settings.Timing.pushbutton_polling_interval
         ):
         threading.Thread.__init__(self)
         self.event_receiver = event_receiver
+        self.polling_period = polling_period
         self.buttons = {}
         for name, pin in GPIOs:
             self.buttons[name] = Pushbutton(pin)
@@ -115,7 +255,7 @@ class Pushbuttons(threading.Thread):
 
     def run(self):
         while True: 
-            time.sleep(0.2)
+            time.sleep(self.polling_period)
             for name in ["b", "c", "d"]:
                 change = self.buttons[name].get_state()
                 if change == True:
@@ -143,35 +283,47 @@ class Main(threading.Thread):
         ):
         threading.Thread.__init__(self)
         self.queue = queue.Queue()
-
+        self.setting = Settings()
         self.encoders = amt203s.AMT203s(
-                self.add_to_queue,
-                {
-                    "a":2,
-                    "b":3,
-                    "c":4,
-                    "d":17
-                }
+                event_receiver = self.add_to_queue,
+                names_gpios = {
+                    "a":self.settings.GPIOs.A_ENCODER_CHIP_SELECT,
+                    "b":self.settings.GPIOs.B_ENCODER_CHIP_SELECT,
+                    "c":self.settings.GPIOs.C_ENCODER_CHIP_SELECT,
+                    "d":self.settings.GPIOs.D_ENCODER_CHIP_SELECT
+                },
+                bus_number = self.settings.SPI.bus_number, 
+                device_number = self.settings.SPI.device_number,
+                speed_hz = self.settings.SPI.speed_hz,
+                delay = self.settings.SPI.delay,
+                polling_period = self.settings.Timing.encoder_polling_interval
             )
 
         self.lamps = Lamps(
                 {
-                    "a":23,
-                    "b":24,
-                    "c":25,
-                    "d":8
+                    "a":self.settings.GPIOs.A_LAMP,
+                    "b":self.settings.GPIOs.B_LAMP,
+                    "c":self.settings.GPIOs.C_LAMP,
+                    "d":self.settings.GPIOs.D_LAMP
                 }
             )
 
         self.pushbuttons = Pushbuttons(
                 {
-                    "b":14,
-                    "c":15,
-                    "d":18
-                }
+                    "b":self.settings.GPIOs.B_SWITCH,
+                    "c":self.settings.GPIOs.C_SWITCH,
+                    "d":self.settings.GPIOs.D_SWITCH,
+                }, 
+                {
+                    "b":self.settings.GPIOs.B_SWITCH_LIGHT,
+                    "c":self.settings.GPIOs.C_SWITCH_LIGHT,
+                    "d":self.settings.GPIOs.D_SWITCH_LIGHT,
+                }, 
             )
 
-        self.signals = Signals()
+        self.signals = Signals(
+            self.settings.Timing.fpga_send_interval
+            )
         self.start()
         self.encoders.send_positions()
 
@@ -238,4 +390,8 @@ class Main(threading.Thread):
 
                 case "encoder_exception":
                     pass
+
+
+
+
 
