@@ -53,7 +53,7 @@ class Settings():
         bus_number = 0
         device_number = 0 
         speed_hz = 1953125
-        delay = 40self.settings.Timing.pushbutton_polling_interval
+        delay = self.settings.Timing.pushbutton_polling_interval
 
 
 
