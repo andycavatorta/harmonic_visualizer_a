@@ -330,7 +330,7 @@ class Main(threading.Thread):
             self.add_to_queue
             )
         self.start()
-        self.encoders.send_positions()
+        self.encoders.get_positions()
 
     def set_encoder_to_zero(self, encoder_name):
         """
