@@ -390,7 +390,7 @@ class Main(threading.Thread):
                 case "encoder_exception":
                     pass
 
-
+main = Main()
 
 
 
