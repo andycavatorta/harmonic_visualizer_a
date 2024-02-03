@@ -43,15 +43,15 @@ class AMT203():
         return received_bytes
 
     def get_position(self) -> int:
-        request = self.spi_write_read(self.pin, [self.READ_POS])
+        request = self.spi_write_read([self.READ_POS])
         counter = 0
         while request[0] != self.READ_POS:
-            request = self.spi_write_read(self.pin, [self.NO_OP])
+            request = self.spi_write_read([self.NO_OP])
             counter += 1
             if counter == 100:
                 return -1
-        position_bytes = self.spi_write_read(self.pin, [self.NO_OP])
-        position_bytes += self.spi_write_read(self.pin, [self.NO_OP])
+        position_bytes = self.spi_write_read([self.NO_OP])
+        position_bytes += self.spi_write_read([self.NO_OP])
         position_int = self.from_bytes(position_bytes)
         change_int = position_int - self.last_position
         self.last_position = position_int
@@ -59,10 +59,10 @@ class AMT203():
 
     def set_zero(self, pin) -> bool:
         """ Must power-cycle to start using new zero point """
-        request = self.spi_write_read(self.pin, [self.SET_ZERO])
+        request = self.spi_write_read([self.SET_ZERO])
         counter = 0
         while request[0] != self.ACK_ZERO:
-            request = self.spi_write_read(self.pin, [self.NO_OP])
+            request = self.spi_write_read([self.NO_OP])
             counter += 1
             if counter == 100:
                 return False
