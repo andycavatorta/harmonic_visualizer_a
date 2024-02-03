@@ -71,6 +71,7 @@ class AMT203():
 
 class AMT203s(threading.Thread):
     def __init__(
+            self,
             event_receiver,
             names_gpios,               
             bus_number=0, 
