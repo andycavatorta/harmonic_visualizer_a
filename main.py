@@ -282,7 +282,7 @@ class Main(threading.Thread):
         ):
         threading.Thread.__init__(self)
         self.queue = queue.Queue()
-        self.setting = Settings()
+        self.settings = Settings()
         self.encoders = amt203s.AMT203s(
                 event_receiver = self.add_to_queue,
                 names_gpios = {
