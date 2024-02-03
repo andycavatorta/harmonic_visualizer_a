@@ -101,8 +101,7 @@ class AMT203s(threading.Thread):
                 pin, 
                 self.spi,
                 self.delay_usec,
-                self.delay_sec,
-                self.event_receiver
+                self.delay_sec
             )
         self.start()
 
