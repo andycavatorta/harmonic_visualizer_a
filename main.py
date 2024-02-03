@@ -210,7 +210,7 @@ class Lamps():
             GPIOs
         ):
         self.lamps = {}
-        for name, pin in GPIOs:
+        for name, pin in GPIOs.items():
             self.lamps[name] = Lamp(pin)
 
     def set_state(self, name, state):
@@ -241,7 +241,7 @@ class Pushbuttons(threading.Thread):
         self.event_receiver = event_receiver
         self.polling_period = self.settings.Timing.pushbutton_polling_interval
         self.buttons = {}
-        for name, pin in GPIOs:
+        for name, pin in GPIOs.item():
             self.buttons[name] = Pushbutton(pin)
         self.start()
 
