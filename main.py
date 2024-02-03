@@ -56,6 +56,7 @@ class Settings():
         speed_hz = 1953125
         delay = 40
 
+    serial_device_name_pattern = ""
 
 
 # signal generation
@@ -325,7 +326,8 @@ class Main(threading.Thread):
             )
 
         self.signals = Signals(
-            self.settings.Timing.fpga_send_interval
+            self.settings.serial_device_name_pattern,
+            self.add_to_queue
             )
         self.start()
         self.encoders.send_positions()
