@@ -244,7 +244,7 @@ class Pushbuttons(threading.Thread):
         self.event_receiver = event_receiver
         self.polling_period = self.settings.Timing.pushbutton_polling_interval
         self.buttons = {}
-        for name, pin in GPIOs.item():
+        for name, pin in GPIOs.items():
             self.buttons[name] = Pushbutton(pin)
         self.start()
 
