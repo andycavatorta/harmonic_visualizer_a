@@ -25,7 +25,7 @@ class AMT203():
         self.name = name
         self.pin = pin
         self.spi = spi
-        self.delay_usec = 40
+        self.delay_usec = delay_usec
         self.delay_sec = delay_sec
         self.speed_hz = speed_hz
 
@@ -83,8 +83,8 @@ class AMT203s(threading.Thread):
             polling_period = 0.1
         ):
         threading.Thread.__init__(self)
-        self.delay_sec = delay / 1E3
-        self.delay_usec = delay / 1E3
+        self.delay_sec = delay #/ 1E3
+        self.delay_usec = delay #/ 1E3
         self.polling_period = polling_period
         self.event_receiver = event_receiver
 
@@ -127,6 +127,6 @@ class AMT203s(threading.Thread):
         while True:
             time.sleep(self.polling_period)
             for name,encoder in self.encoders.items():
-                position, change = encoder.get_position()
+                position_change = encoder.get_position()
                 if change != 0:
-                    self.event_receiver("encoder_event", name, position)
+                    self.event_receiver("encoder_event", name, position_change)
