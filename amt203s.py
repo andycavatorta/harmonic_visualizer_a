@@ -25,7 +25,7 @@ class AMT203():
         self.name = name
         self.pin = pin
         self.spi = spi
-        self.delay_usec = delay_usec
+        self.delay_usec = 0
         self.delay_sec = delay_sec
         self.speed_hz = speed_hz
 
