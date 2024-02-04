@@ -363,8 +363,8 @@ class Main(threading.Thread):
         for button_name, button_value in button_states.items():
             self.handle_pushbutton_event(button_name, button_value)
 
-    def handle_pushbutton_event(self, button_name, button_value):
-        self.pushbuttons.set_value[button_name] = button_value
+    def handle_pushbutton_event(self, button_name):
+        button_value = self.pushbuttons.get_state[button_name]
         if button_value == True:
             position = self.encoders.get_position(button_name)
             pitch_range_name, frequency,in_center_range = convert_position_to_frequency(encoder_value)
