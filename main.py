@@ -105,6 +105,7 @@ class Signals():
         self.serial_port = {
             "is_open":False
         }
+        self.connect()
 
     def get_connected(self):
         # wrap in a method because it's impolite to access properties directly 
@@ -156,8 +157,7 @@ class Signals():
         return binary_str.zfill(fill)
 
     def send_serial_data(self,binary_word_str):
-        print(self.serial_port)
-        if self.serial_port.connected:
+        if self.serial_port.is_open:
             binary_word_length = len(binary_word_str)
             if binary_word_length not in [8,14,18,24,25,30,35,40,44,48,52,56,60,64]:
                 self.exception_receiver("Signals.send_serial_data", "Error in makeSerialPackets, invalid length for binary_word_str:{}".format(binary_word_length))
