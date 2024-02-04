@@ -24,6 +24,7 @@ import amt203s
 import math
 import queue
 import serial
+import time
 import threading
 import RPi.GPIO as GPIO
 
