@@ -156,7 +156,7 @@ class Signals():
         return binary_str.zfill(fill)
 
     def send_serial_data(self,binary_word_str):
-        print(self.serial_port.__dict__.keys())
+        print(self.serial_port)
         if self.serial_port.connected:
             binary_word_length = len(binary_word_str)
             if binary_word_length not in [8,14,18,24,25,30,35,40,44,48,52,56,60,64]:
