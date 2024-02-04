@@ -227,7 +227,7 @@ class Pushbutton():
         self.last_state = False
         GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-    def get_state(self, state):
+    def get_state(self):
         state = GPIO.output(self.pin)
         change = self.last_state != state
         self.last_state = state
