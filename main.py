@@ -57,8 +57,7 @@ class Settings():
         speed_hz = 1953125
         delay = 40
 
-    serial_device_name_pattern = "platform-fd500000.pcie-pci-0000:01:00.0-usb-0:1.1:1.0-port0"
-    #usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
+    serial_device_name_pattern = "/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
 
 
 # signal generation
