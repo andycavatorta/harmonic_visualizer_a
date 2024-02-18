@@ -365,7 +365,8 @@ class Main(threading.Thread):
         button_states = self.pushbuttons.get_states()
         button_states["a"] = True
         for button_name, button_value in button_states.items():
-            self.handle_pushbutton_event(button_name)
+            if button_name != "a": # refactor: fix upstream
+                self.handle_pushbutton_event(button_name)
 
     def handle_pushbutton_event(self, button_name):
         button_value = self.pushbuttons.buttons[button_name].get_state
