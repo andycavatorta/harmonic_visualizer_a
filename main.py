@@ -122,6 +122,7 @@ class Signals():
                     parity = serial.PARITY_NONE,
                     stopbits = serial.STOPBITS_ONE
                 )
+            print(self.serial_port)
             self.connected = True
         except Exception as e:
             self.connected = False
