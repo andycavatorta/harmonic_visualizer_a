@@ -184,8 +184,8 @@ class Signals():
                 packet_int = int(byte_stuffing_str + payload_str, 2) # combine binary strings and convert into base-10 value
                 packet_chr = chr(packet_int)
                 #packet_bytes = bytes(packet_chr)
-                print(">", packet_int, packet_chr, packet_int.to_bytes(6, "little"))
-                #self.serial_port.write(packet_bytes)
+                print(">", packet_int, packet_chr, packet_int.to_bytes(8, "little"))
+                self.serial_port.write(packet_bytes)
                 time.sleep(0.005)
         else:
             self.exception_receiver("Signals.send_serial_data", "serial port not connected")
