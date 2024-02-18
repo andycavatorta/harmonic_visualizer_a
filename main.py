@@ -183,7 +183,7 @@ class Signals():
                 packet_number += 1 # increment packet ordinal    
                 packet_int = int(byte_stuffing_str + payload_str, 2) # combine binary strings and convert into base-10 value
                 packet_chr = chr(packet_int)
-                packet_bytes = bytes(packet_chr)
+                #packet_bytes = bytes(packet_chr)
                 print(packet_chr)
                 #self.serial_port.write(packet_bytes)
                 time.sleep(0.005)
