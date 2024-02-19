@@ -40,7 +40,7 @@ class AMT203():
     def spi_write_read(self, output_bytes) -> bytes:
         GPIO.output(self.pin, GPIO.LOW)
         time.sleep(self.delay_sec)
-        received_bytes = self.spi.xfer(output_bytes, self.speed_hz, self.delay_usec)
+        received_bytes = self.spi.xfer(output_bytes, self.speed_hz) #, self.delay_usec)
         GPIO.output(self.pin, GPIO.HIGH)
         return received_bytes
 
