@@ -45,18 +45,27 @@ class AMT203():
         return received_bytes
 
     def get_position(self) -> int:
+        print("--1")
         request = self.spi_write_read([self.READ_POS])
+        print("--2")
         counter = 0
+        print("--3")
         while request[0] != self.READ_POS:
+            print("--4")
             request = self.spi_write_read([self.NO_OP])
             counter += 1
             if counter == 100:
                 return -1
         position_bytes = self.spi_write_read([self.NO_OP])
+        print("--5")
         position_bytes += self.spi_write_read([self.NO_OP])
+        print("--6")
         position_int = self.from_bytes(position_bytes)
+        print("--7")
         change_int = position_int - self.last_position
+        print("--8")
         self.last_position = position_int
+        print("--9")
         return (position_int, change_int)
 
     def set_zero(self, pin) -> bool:
@@ -127,8 +136,6 @@ class AMT203s(threading.Thread):
         while True:
             time.sleep(self.polling_period)
             for name,encoder in self.encoders.items():
-                print(name,encoder)
                 position_change = encoder.get_position()
-                print(position_change)
                 if position_change != 0:
                     self.event_receiver("encoder_event", name, position_change)
