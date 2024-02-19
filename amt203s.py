@@ -47,7 +47,7 @@ class AMT203():
     def get_position(self) -> int:
         print("--1",self.name)
         request = self.spi_write_read([self.READ_POS])
-        print("--2",self.name)
+        print("--2",self.name,request)
         counter = 0
         print("--3",self.name)
         while request[0] != self.READ_POS:
@@ -57,13 +57,13 @@ class AMT203():
             if counter == 100:
                 return -1
         position_bytes = self.spi_write_read([self.NO_OP])
-        print("--5",self.name)
+        print("--5",self.name,position_bytes)
         position_bytes += self.spi_write_read([self.NO_OP])
-        print("--6",self.name)
+        print("--6",self.name,position_bytes)
         position_int = self.from_bytes(position_bytes)
-        print("--7",self.name)
+        print("--7",self.name,position_int)
         change_int = position_int - self.last_position
-        print("--8",self.name)
+        print("--8",self.name,change_int)
         self.last_position = position_int
         print("--9",self.name)
         return (position_int, change_int)
