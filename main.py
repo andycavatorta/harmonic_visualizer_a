@@ -386,7 +386,6 @@ class Main(threading.Thread):
             self.signals.set_frequency(encoder_name, frequency)
 
     def add_to_queue(self, topic, device, value):
-        print(topic, device, value)
         self.queue.put((topic, device, value))
 
     def run(self):
