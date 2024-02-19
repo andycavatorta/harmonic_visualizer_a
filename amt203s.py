@@ -127,6 +127,7 @@ class AMT203s(threading.Thread):
         while True:
             time.sleep(self.polling_period)
             for name,encoder in self.encoders.items():
+                print(name,encoder)
                 position_change = encoder.get_position()
                 print(position_change)
                 if position_change != 0:
