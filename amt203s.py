@@ -123,7 +123,7 @@ class AMT203s(threading.Thread):
     def get_positions(self):
         positions = {}
         for name,encoder in self.encoders.items():
-            positions[name] = encoder.get_position()[0]
+            positions[name] = encoder.get_position()
         return positions
 
     def get_presences(self):
