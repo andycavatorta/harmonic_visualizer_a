@@ -344,8 +344,8 @@ class Main(threading.Thread):
         self.encoders.set_encoder_to_zero(encoder_name)
 
     def convert_position_to_frequency(self, position):
-        print("=====",position)
         pitch_range_int = int(position/60)
+        print("=====",position,pitch_range_int)
         pitch_range_name = self.PITCH_NAMES[pitch_range_int]
         frequency_range_center = self.PITCH_FREQUENCIES[pitch_range_int]
         local_position_offset = position-(60*pitch_range_int)
