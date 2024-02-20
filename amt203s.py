@@ -51,7 +51,7 @@ class AMT203():
         counter = 0
         print("--3",self.name)
         while request[0] != self.READ_POS:
-            print("--4",self.name)
+            #print("--4",self.name)
             request = self.spi_write_read([self.NO_OP])
             counter += 1
             if counter == 100:
