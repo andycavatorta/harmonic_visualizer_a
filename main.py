@@ -371,11 +371,11 @@ class Main(threading.Thread):
                 self.handle_pushbutton_event(button_name)
 
     def handle_pushbutton_event(self, button_name):
-        print(">>>","handle_pushbutton_event")
         button_value = self.pushbuttons.buttons[button_name].get_state
         if button_value == True:
             position = self.encoders.get_position(button_name)
             pitch_range_name, frequency,in_center_range = convert_position_to_frequency(encoder_value)
+            print(">>>","handle_pushbutton_event",pitch_range_name, frequency,in_center_range)
             self.lamps.set_state(button_name, in_center_range)
             self.signals.set_frequency(button_name, frequency)
         else:
