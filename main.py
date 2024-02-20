@@ -336,7 +336,7 @@ class Main(threading.Thread):
             self.add_to_queue
             )
         self.start()
-        self.encoders.get_positions()
+        #self.encoders.get_positions()
 
     def set_encoder_to_zero(self, encoder_name):
         """
@@ -394,7 +394,7 @@ class Main(threading.Thread):
         self.queue.put((topic, device, value))
 
     def run(self):
-        self.handle_start_conditions()
+        #self.handle_start_conditions()
         while True:
             topic, device, value = self.queue.get()
             match topic:
