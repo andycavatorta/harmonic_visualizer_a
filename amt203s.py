@@ -55,7 +55,7 @@ class AMT203():
             request = self.spi_write_read([self.NO_OP])
             counter += 1
             if counter == 100:
-                return -1
+                return (-1, False)
         position_bytes = self.spi_write_read([self.NO_OP])
         print("--5",self.name,position_bytes)
         position_bytes += self.spi_write_read([self.NO_OP])
