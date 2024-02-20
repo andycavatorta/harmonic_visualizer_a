@@ -146,7 +146,7 @@ class Signals():
         if frequency == 0:
             period_binary_str = "000000000000000000000000"
         else:
-            period_int = int((settings.Timing.fpga_clk_hz)/frequency/2)
+            period_int = int((Settings.Timing.fpga_clk_hz)/frequency/2)
             period_binary_str = self.decimal_to_binary_string(period_int, 24)
         word_b_str = channel_id_binary_str + period_binary_str
         return word_b_str
