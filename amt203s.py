@@ -61,7 +61,7 @@ class AMT203():
         self.last_position = position_int
         #print("--9",self.name,position_int, change_int)
         end_time = time.time()
-        print(end_time - start_time)
+        print(self.name, end_time - start_time)
         return (position_int, change_int)
 
     def set_zero(self, pin) -> bool:
