@@ -56,6 +56,7 @@ class Settings():
         device_number = 0 
         speed_hz = 1953125
         delay = 5
+        resolution = 4096
 
     serial_device_name_pattern = "/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
 
@@ -185,7 +186,7 @@ class Signals():
                 packet_int = int(byte_stuffing_str + payload_str, 2) # combine binary strings and convert into base-10 value
                 #packet_chr = chr(packet_int)
                 packet_bytes = packet_int.to_bytes(1, "little")
-                print("packet_int:", packet_int, "packet_bytes:", packet_bytes)
+                #print("packet_int:", packet_int, "packet_bytes:", packet_bytes)
                 self.serial_port.write(packet_bytes)
                 time.sleep(0.01)
         else:
@@ -305,7 +306,8 @@ class Main(threading.Thread):
                 device_number = self.settings.SPI.device_number,
                 speed_hz = self.settings.SPI.speed_hz,
                 delay = self.settings.SPI.delay,
-                polling_period = self.settings.Timing.encoder_polling_interval
+                polling_period = self.settings.Timing.encoder_polling_interval,
+                resolution = Settings.SPI.resolution
             )
 
         self.lamps = Lamps(
@@ -346,7 +348,7 @@ class Main(threading.Thread):
 
     def convert_position_to_frequency(self, position):
         pitch_range_int = int(position/60)
-        #print("=====",position,pitch_range_int)
+        print("=====",position,pitch_range_int)
         pitch_range_name = self.PITCH_NAMES[pitch_range_int]
         frequency_range_center = self.PITCH_FREQUENCIES[pitch_range_int]
         local_position_offset = position-(60*pitch_range_int)
@@ -384,9 +386,9 @@ class Main(threading.Thread):
             self.signals.set_frequency(button_name, 0)
 
     def handle_encoder_event(self, encoder_name, encoder_value):
-        #print(">>>","handle_encoder_event", encoder_name, encoder_value)
+        print(">>>","handle_encoder_event", encoder_name, encoder_value)
         if encoder_name == "a" or encoder_name in self.pushbuttons.get_states():
-            pitch_range_name, frequency,in_center_range = self.convert_position_to_frequency(encoder_value[0])
+            pitch_range_name, frequency,in_center_range = self.convert_position_to_frequency(encoder_value[2])
             self.lamps.set_state(encoder_name, in_center_range)
             self.signals.set_frequency(encoder_name, frequency)
 

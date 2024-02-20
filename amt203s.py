@@ -19,7 +19,8 @@ class AMT203():
             spi,
             delay_usec,
             delay_sec,
-            speed_hz
+            speed_hz,
+            resolution
         ):
 
         self.name = name
@@ -28,6 +29,7 @@ class AMT203():
         self.delay_usec = delay_usec
         self.delay_sec = delay_sec
         self.speed_hz = speed_hz
+        self.resolution = resolution
 
         GPIO.setup(pin, GPIO.OUT)
         GPIO.output(pin, GPIO.HIGH)
@@ -61,7 +63,12 @@ class AMT203():
         self.last_position = position_int
         #print("--9",self.name,position_int, change_int)
         end_time = time.time()
-        return (position_int, change_int)
+        return (
+            position_int, 
+            change_int, 
+            position_int % self.resolution, 
+            change_int % self.resolution
+        )
 
     def set_zero(self, pin) -> bool:
         """ Must power-cycle to start using new zero point """
@@ -84,13 +91,15 @@ class AMT203s(threading.Thread):
             device_number=0, 
             speed_hz=1953125,
             delay=40,
-            polling_period = 0.1
+            polling_period = 0.1,
+            resolution = 4096
         ):
         threading.Thread.__init__(self)
         self.delay_sec = delay #/ 1E3
         self.delay_usec = 0.01
         self.polling_period = polling_period
         self.event_receiver = event_receiver
+        self.resolution = resolution
 
         self.spi = spidev.SpiDev()
         self.spi.open(bus_number, device_number)
@@ -108,7 +117,8 @@ class AMT203s(threading.Thread):
                 self.spi,
                 self.delay_usec,
                 self.delay_sec,
-                self.spi_speed
+                self.spi_speed,
+                self.resolution
             )
         self.start()
 
