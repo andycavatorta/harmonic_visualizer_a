@@ -187,7 +187,7 @@ class Signals():
                 packet_bytes = packet_int.to_bytes(1, "little")
                 print("packet_int:", packet_int, "packet_bytes:", packet_bytes)
                 self.serial_port.write(packet_bytes)
-                time.sleep(0.5)
+                time.sleep(0.01)
         else:
             self.exception_receiver("Signals.send_serial_data", "serial port not connected")
 
