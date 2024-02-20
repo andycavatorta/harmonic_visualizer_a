@@ -65,7 +65,7 @@ class AMT203():
         change_int = position_int - self.last_position
         print("--8",self.name,change_int)
         self.last_position = position_int
-        print("--9",self.name)
+        print("--9",self.name,position_int, change_int)
         return (position_int, change_int)
 
     def set_zero(self, pin) -> bool:
