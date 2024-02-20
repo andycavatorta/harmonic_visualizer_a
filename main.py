@@ -90,9 +90,10 @@ class Signals():
     to do: automatic reconnect
     """
     names_to_fpga__gpio_numbers = {
-        "b":"00",
-        "c":"01",
-        "d":"02",
+        "1":"00",
+        "b":"01",
+        "c":"02",
+        "d":"03",
     }
 
     def __init__(
