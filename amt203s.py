@@ -45,6 +45,7 @@ class AMT203():
         return received_bytes
 
     def get_position(self) -> int:
+        start_time = time.time()
         request = self.spi_write_read([self.READ_POS])
         counter = 0
         while request[0] != self.READ_POS:
@@ -59,6 +60,8 @@ class AMT203():
         change_int = position_int - self.last_position
         self.last_position = position_int
         #print("--9",self.name,position_int, change_int)
+        end_time = time.time()
+        print(end_time - start_time)
         return (position_int, change_int)
 
     def set_zero(self, pin) -> bool:
