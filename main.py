@@ -363,6 +363,7 @@ class Main(threading.Thread):
         return (pitch_range_name, frequency,in_center_range)
 
     def handle_start_conditions(self):
+        print(">>>","handle_start_conditions")
         button_states = self.pushbuttons.get_states()
         button_states["a"] = True
         for button_name, button_value in button_states.items():
@@ -370,6 +371,7 @@ class Main(threading.Thread):
                 self.handle_pushbutton_event(button_name)
 
     def handle_pushbutton_event(self, button_name):
+        print(">>>","handle_pushbutton_event")
         button_value = self.pushbuttons.buttons[button_name].get_state
         if button_value == True:
             position = self.encoders.get_position(button_name)
