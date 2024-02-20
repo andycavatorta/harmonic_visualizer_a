@@ -124,6 +124,7 @@ class AMT203s(threading.Thread):
         positions = {}
         for name,encoder in self.encoders.items():
             positions[name] = encoder.get_position()
+                print("++++++",name, positions[name])
         return positions
 
     def get_presences(self):
@@ -136,7 +137,6 @@ class AMT203s(threading.Thread):
         while True:
             time.sleep(self.polling_period)
             for name,encoder in self.encoders.items():
-                position,position_change = encoder.get_position()
-                print("++++++",name, position,position_change)
+                position_change = encoder.get_position()
                 if position_change != 0:
                     self.event_receiver("encoder_event", name, position_change)
