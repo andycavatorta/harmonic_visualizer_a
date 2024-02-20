@@ -55,7 +55,7 @@ class Settings():
         bus_number = 0
         device_number = 0 
         speed_hz = 1953125
-        delay = 40
+        delay = 20
 
     serial_device_name_pattern = "/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
 
