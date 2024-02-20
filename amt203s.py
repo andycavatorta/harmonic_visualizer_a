@@ -45,6 +45,7 @@ class AMT203():
         return received_bytes
 
     def get_position(self) -> int:
+        print("--1",self.name)
         request = self.spi_write_read([self.READ_POS])
         counter = 0
         while request[0] != self.READ_POS:
