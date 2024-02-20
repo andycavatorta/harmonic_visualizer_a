@@ -185,7 +185,7 @@ class Signals():
                 packet_int = int(byte_stuffing_str + payload_str, 2) # combine binary strings and convert into base-10 value
                 #packet_chr = chr(packet_int)
                 packet_bytes = packet_int.to_bytes(1, "little")
-                print(">", packet_int, packet_bytes)
+                print("packet_int:", packet_int, "packet_bytes:", packet_bytes)
                 self.serial_port.write(packet_bytes)
                 time.sleep(0.5)
         else:
@@ -198,7 +198,7 @@ class Signals():
             value
         )
         self.send_serial_data(binary_word_str)
-        print(name,value,binary_word_str)
+        #print(name,value,binary_word_str)
 
 class Lamp():
     def __init__(
@@ -346,7 +346,7 @@ class Main(threading.Thread):
 
     def convert_position_to_frequency(self, position):
         pitch_range_int = int(position/60)
-        print("=====",position,pitch_range_int)
+        #print("=====",position,pitch_range_int)
         pitch_range_name = self.PITCH_NAMES[pitch_range_int]
         frequency_range_center = self.PITCH_FREQUENCIES[pitch_range_int]
         local_position_offset = position-(60*pitch_range_int)
@@ -364,7 +364,7 @@ class Main(threading.Thread):
         return (pitch_range_name, frequency,in_center_range)
 
     def handle_start_conditions(self):
-        print(">>>","handle_start_conditions")
+        #print(">>>","handle_start_conditions")
         button_states = self.pushbuttons.get_states()
         button_states["a"] = True
         for button_name, button_value in button_states.items():
@@ -376,7 +376,7 @@ class Main(threading.Thread):
         if button_value == True:
             position = self.encoders.get_position(button_name)
             pitch_range_name, frequency,in_center_range = convert_position_to_frequency(encoder_value)
-            print(">>>","handle_pushbutton_event",pitch_range_name, frequency,in_center_range)
+            #print(">>>","handle_pushbutton_event",pitch_range_name, frequency,in_center_range)
             self.lamps.set_state(button_name, in_center_range)
             self.signals.set_frequency(button_name, frequency)
         else:
@@ -384,7 +384,7 @@ class Main(threading.Thread):
             self.signals.set_frequency(button_name, 0)
 
     def handle_encoder_event(self, encoder_name, encoder_value):
-        print(">>>","handle_encoder_event", encoder_name, encoder_value)
+        #print(">>>","handle_encoder_event", encoder_name, encoder_value)
         if encoder_name == "a" or encoder_name in self.pushbuttons.get_states():
             pitch_range_name, frequency,in_center_range = self.convert_position_to_frequency(encoder_value[0])
             self.lamps.set_state(encoder_name, in_center_range)
