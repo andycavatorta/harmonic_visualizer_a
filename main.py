@@ -382,7 +382,7 @@ class Main(threading.Thread):
 
     def handle_encoder_event(self, encoder_name, encoder_value):
         if encoder_name == "a" or encoder_name in self.pushbuttons.get_on():
-            pitch_range_name, frequency,in_center_range = self.convert_position_to_frequency(encoder_value)
+            pitch_range_name, frequency,in_center_range = self.convert_position_to_frequency(encoder_value[0])
             self.lamps.set_state(encoder_name, in_center_range)
             self.signals.set_frequency(encoder_name, frequency)
 
