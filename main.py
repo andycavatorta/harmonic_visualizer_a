@@ -107,6 +107,12 @@ class Signals():
         self.serial_port = {
             "is_open":False
         }
+        self.continuity_for_debug = {
+            "a":0,
+            "b":0,
+            "c":0,
+            "d":0,
+        }
         self.connect()
 
     def get_connected(self):
@@ -143,6 +149,13 @@ class Signals():
         100 fffff (frequency)
         101 fffff (frequency)
         """
+        self.continuity_for_debug[channel_str] = frequency
+        print(
+            self.continuity_for_debug["a"],
+            self.continuity_for_debug["b"],
+            self.continuity_for_debug["c"],
+            self.continuity_for_debug["d"]
+        )
         channel_id_binary_str = self.decimal_to_binary_string(int(channel_str)+1, 6)
         if frequency == 0:
             period_binary_str = "000000000000000000000000"
@@ -348,7 +361,7 @@ class Main(threading.Thread):
 
     def convert_position_to_frequency(self, position):
         pitch_range_int = int(position/60)
-        print("=====",position,pitch_range_int)
+        #print("=====",position,pitch_range_int)
         pitch_range_name = self.PITCH_NAMES[pitch_range_int]
         frequency_range_center = self.PITCH_FREQUENCIES[pitch_range_int]
         local_position_offset = position-(60*pitch_range_int)
@@ -386,7 +399,7 @@ class Main(threading.Thread):
             self.signals.set_frequency(button_name, 0)
 
     def handle_encoder_event(self, encoder_name, encoder_value):
-        print(">>>","handle_encoder_event", encoder_name, encoder_value)
+        #print(">>>","handle_encoder_event", encoder_name, encoder_value)
         if encoder_name == "a" or encoder_name in self.pushbuttons.get_states():
             pitch_range_name, frequency,in_center_range = self.convert_position_to_frequency(encoder_value[2])
             self.lamps.set_state(encoder_name, in_center_range)
@@ -410,6 +423,3 @@ class Main(threading.Thread):
                     pass
 
 main = Main()
-
-
-
