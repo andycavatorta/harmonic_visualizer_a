@@ -150,12 +150,7 @@ class Signals():
         101 fffff (frequency)
         """
         self.continuity_for_debug[channel_str] = frequency
-        print(
-            self.continuity_for_debug["a"],
-            self.continuity_for_debug["b"],
-            self.continuity_for_debug["c"],
-            self.continuity_for_debug["d"]
-        )
+        print(self.continuity_for_debug)
         channel_id_binary_str = self.decimal_to_binary_string(int(channel_str)+1, 6)
         if frequency == 0:
             period_binary_str = "000000000000000000000000"
