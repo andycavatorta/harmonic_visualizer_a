@@ -55,7 +55,7 @@ class Settings():
         bus_number = 0
         device_number = 0 
         speed_hz = 1953125
-        delay = 5
+        delay = 20
         resolution = 4096
 
     serial_device_name_pattern = "/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
@@ -203,7 +203,7 @@ class Signals():
                 packet_bytes = packet_int.to_bytes(1, "little")
                 #print("packet_int:", packet_int, "packet_bytes:", packet_bytes)
                 self.serial_port.write(packet_bytes)
-                time.sleep(0.01)
+                time.sleep(0.001)
         else:
             self.exception_receiver("Signals.send_serial_data", "serial port not connected")
 
