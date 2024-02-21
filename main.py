@@ -108,10 +108,10 @@ class Signals():
             "is_open":False
         }
         self.continuity_for_debug = {
-            "a":0,
-            "b":0,
-            "c":0,
-            "d":0,
+            "01":0,
+            "02":0,
+            "03":0,
+            "04":0,
         }
         self.connect()
 
@@ -150,7 +150,12 @@ class Signals():
         101 fffff (frequency)
         """
         self.continuity_for_debug[channel_str] = frequency
-        print(self.continuity_for_debug)
+        print(
+            self.continuity_for_debug["01"],
+            self.continuity_for_debug["02"],
+            self.continuity_for_debug["03"],
+            self.continuity_for_debug["04"]
+        )
         channel_id_binary_str = self.decimal_to_binary_string(int(channel_str)+1, 6)
         if frequency == 0:
             period_binary_str = "000000000000000000000000"
