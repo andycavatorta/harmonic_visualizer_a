@@ -47,7 +47,7 @@ class Settings():
 
     class Timing:
         pushbutton_polling_interval = 0.1
-        encoder_polling_interval = 0.001
+        encoder_polling_interval = 0.1
         #fpga_send_interval = 0.1
         fpga_clk_hz = 50000000
 
@@ -408,6 +408,7 @@ class Main(threading.Thread):
             self.signals.set_frequency(encoder_name, frequency)
 
     def add_to_queue(self, topic, device, value):
+        print(self.queue.qsize())
         self.queue.put((topic, device, value))
 
     def run(self):
