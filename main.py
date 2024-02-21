@@ -47,7 +47,7 @@ class Settings():
 
     class Timing:
         pushbutton_polling_interval = 0.1
-        encoder_polling_interval = 0.2
+        encoder_polling_interval = 0.1
         #fpga_send_interval = 0.1
         fpga_clk_hz = 50000000
 
@@ -55,7 +55,7 @@ class Settings():
         bus_number = 0
         device_number = 0 
         speed_hz = 1953125
-        delay = 20
+        delay = 5
         resolution = 4096
 
     serial_device_name_pattern = "/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller-if00-port0"
@@ -361,8 +361,7 @@ class Main(threading.Thread):
         self.encoders.set_encoder_to_zero(encoder_name)
 
     def convert_position_to_frequency(self, position):
-        pitch_range_int = int(position/68.27)
-        #print("=====",position,pitch_range_int)
+        pitch_range_int = int(position/68.3)
         pitch_range_name = self.PITCH_NAMES[pitch_range_int]
         frequency_range_center = self.PITCH_FREQUENCIES[pitch_range_int]
         local_position_offset = position-(60*pitch_range_int)
