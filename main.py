@@ -361,8 +361,6 @@ class Main(threading.Thread):
         self.encoders.set_encoder_to_zero(encoder_name)
 
     def convert_position_to_frequency(self, position):
-        if position > 60:
-            position = 60
         pitch_range_int = int(position/60)
         #print("=====",position,pitch_range_int)
         pitch_range_name = self.PITCH_NAMES[pitch_range_int]
