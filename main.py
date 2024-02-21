@@ -214,7 +214,7 @@ class Signals():
             self.names_to_fpga__gpio_numbers[name],
             value
         )
-        #self.send_serial_data(binary_word_str)
+        self.send_serial_data(binary_word_str)
 
 class Lamp():
     def __init__(
@@ -407,7 +407,7 @@ class Main(threading.Thread):
             self.signals.set_frequency(encoder_name, frequency)
 
     def add_to_queue(self, topic, device, value):
-        #print(self.queue.qsize())
+        print(self.queue.qsize())
         self.queue.put((topic, device, value))
 
     def run(self):
