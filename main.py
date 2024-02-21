@@ -150,14 +150,13 @@ class Signals():
         101 fffff (frequency)
         """
         last_continuity_for_debug = dict(self.continuity_for_debug)
-        print(channel_str, frequency)
         self.continuity_for_debug[channel_str] = frequency
         if last_continuity_for_debug != self.continuity_for_debug:
-            print(
+            print(,
+                self.continuity_for_debug["00"]
                 self.continuity_for_debug["01"],
                 self.continuity_for_debug["02"],
-                self.continuity_for_debug["03"],
-                self.continuity_for_debug["04"]
+                self.continuity_for_debug["03"]
             )
         channel_id_binary_str = self.decimal_to_binary_string(int(channel_str)+1, 6)
         if frequency == 0:
