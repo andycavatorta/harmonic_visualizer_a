@@ -151,13 +151,14 @@ class Signals():
         """
         last_continuity_for_debug = dict(self.continuity_for_debug)
         self.continuity_for_debug[channel_str] = frequency
-        if last_continuity_for_debug != self.continuity_for_debug:
-            print(
-                self.continuity_for_debug["00"],
-                self.continuity_for_debug["01"],
-                self.continuity_for_debug["02"],
-                self.continuity_for_debug["03"]
-            )
+        if last_continuity_for_debug == self.continuity_for_debug:
+            return
+        print(
+            self.continuity_for_debug["00"],
+            self.continuity_for_debug["01"],
+            self.continuity_for_debug["02"],
+            self.continuity_for_debug["03"]
+        )
         channel_id_binary_str = self.decimal_to_binary_string(int(channel_str)+1, 6)
         if frequency == 0:
             period_binary_str = "000000000000000000000000"
@@ -407,7 +408,7 @@ class Main(threading.Thread):
             self.signals.set_frequency(encoder_name, frequency)
 
     def add_to_queue(self, topic, device, value):
-        print(self.queue.qsize())
+        #print(self.queue.qsize())
         self.queue.put((topic, device, value))
 
     def run(self):
