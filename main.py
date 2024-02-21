@@ -150,6 +150,7 @@ class Signals():
         101 fffff (frequency)
         """
         last_continuity_for_debug = dict(self.continuity_for_debug)
+        print(channel_str, frequency)
         self.continuity_for_debug[channel_str] = frequency
         if last_continuity_for_debug != self.continuity_for_debug:
             print(
@@ -209,7 +210,7 @@ class Signals():
 
 
     def set_frequency(self,name,value):
-        print(name, self.names_to_fpga__gpio_numbers[name])
+        #print(name, self.names_to_fpga__gpio_numbers[name])
         binary_word_str = self.make_binary_word(
             self.names_to_fpga__gpio_numbers[name],
             value
