@@ -47,7 +47,7 @@ class Settings():
 
     class Timing:
         pushbutton_polling_interval = 0.1
-        encoder_polling_interval = 0.1
+        encoder_polling_interval = 0.2
         #fpga_send_interval = 0.1
         fpga_clk_hz = 50000000
 
