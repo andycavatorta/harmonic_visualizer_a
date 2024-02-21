@@ -213,7 +213,7 @@ class Signals():
             self.names_to_fpga__gpio_numbers[name],
             value
         )
-        self.send_serial_data(binary_word_str)
+        #self.send_serial_data(binary_word_str)
         #print(name,value,binary_word_str)
 
 class Lamp():
@@ -422,8 +422,7 @@ class Main(threading.Thread):
                     self.handle_pushbutton_event(device, value)
 
                 case "encoder_event":
-                    print(device, value)
-                    #self.handle_encoder_event(device, value)
+                    self.handle_encoder_event(device, value)
 
                 case "encoder_exception":
                     pass
