@@ -215,7 +215,8 @@ class Signals():
             self.names_to_fpga__gpio_numbers[name],
             value
         )
-        self.send_serial_data(binary_word_str)
+        if binary_word_str:
+            self.send_serial_data(binary_word_str)
 
 class Lamp():
     def __init__(
