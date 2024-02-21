@@ -209,12 +209,12 @@ class Signals():
 
 
     def set_frequency(self,name,value):
+        print(name,value)
         binary_word_str = self.make_binary_word(
             self.names_to_fpga__gpio_numbers[name],
             value
         )
         #self.send_serial_data(binary_word_str)
-        #print(name,value,binary_word_str)
 
 class Lamp():
     def __init__(
