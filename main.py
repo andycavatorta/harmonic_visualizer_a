@@ -152,8 +152,8 @@ class Signals():
         last_continuity_for_debug = dict(self.continuity_for_debug)
         self.continuity_for_debug[channel_str] = frequency
         if last_continuity_for_debug != self.continuity_for_debug:
-            print(,
-                self.continuity_for_debug["00"]
+            print(
+                self.continuity_for_debug["00"],
                 self.continuity_for_debug["01"],
                 self.continuity_for_debug["02"],
                 self.continuity_for_debug["03"]
