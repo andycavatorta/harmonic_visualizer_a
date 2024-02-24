@@ -108,10 +108,10 @@ class Signals():
             "is_open":False
         }
         self.continuity_for_debug = {
-            "01":0,
             "02":0,
-            "03":0,
             "04":0,
+            "06":0,
+            "08":0,
         }
         self.connect()
 
@@ -154,10 +154,10 @@ class Signals():
         if last_continuity_for_debug == self.continuity_for_debug:
             return
         print(
-            self.continuity_for_debug["01"],
-            self.continuity_for_debug["03"],
-            self.continuity_for_debug["05"],
-            self.continuity_for_debug["07"]
+            self.continuity_for_debug["02"],
+            self.continuity_for_debug["04"],
+            self.continuity_for_debug["06"],
+            self.continuity_for_debug["08"]
         )
         channel_id_binary_str = self.decimal_to_binary_string(int(channel_str)+1, 6)
         if frequency == 0:
