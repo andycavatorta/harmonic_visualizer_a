@@ -154,10 +154,10 @@ class Signals():
         if last_continuity_for_debug == self.continuity_for_debug:
             return
         print(
-            self.continuity_for_debug["00"],
             self.continuity_for_debug["01"],
-            self.continuity_for_debug["02"],
-            self.continuity_for_debug["03"]
+            self.continuity_for_debug["03"],
+            self.continuity_for_debug["05"],
+            self.continuity_for_debug["07"]
         )
         channel_id_binary_str = self.decimal_to_binary_string(int(channel_str)+1, 6)
         if frequency == 0:
