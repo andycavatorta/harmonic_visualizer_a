@@ -159,7 +159,7 @@ class Signals():
             self.continuity_for_debug["06"],
             self.continuity_for_debug["08"],
         )
-        channel_id_binary_str = self.decimal_to_binary_string(int(channel_str)+1, 6)
+        channel_id_binary_str = self.decimal_to_binary_string(int(channel_str), 6)
         if frequency == 0:
             period_binary_str = "000000000000000000000000"
         else:
