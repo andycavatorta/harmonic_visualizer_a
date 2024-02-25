@@ -94,7 +94,7 @@ class Signals():
         "a":"02",
         "b":"04",
         "c":"06",
-        "d":"08",
+        "d":"10",
     }
 
     def __init__(
@@ -111,7 +111,7 @@ class Signals():
             "02":0,
             "04":0,
             "06":0,
-            "08":0,
+            "10":0,
         }
         self.connect()
 
@@ -157,7 +157,7 @@ class Signals():
             self.continuity_for_debug["02"],
             self.continuity_for_debug["04"],
             self.continuity_for_debug["06"],
-            self.continuity_for_debug["08"],
+            self.continuity_for_debug["10"],
         )
         channel_id_binary_str = self.decimal_to_binary_string(int(channel_str), 6)
         if frequency == 0:
